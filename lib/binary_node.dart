@@ -1,6 +1,9 @@
 void main() {
   final tree = createBinaryTree();
-  tree.traverseInOrder(print);~
+  print("In-Order Traversal");
+  tree.traverseInOrder(print);
+  print("Pre-Order Traversal");
+  tree.traversePostOrder(print);
 }
 
 BinaryNode<int> createBinaryTree() {
@@ -62,5 +65,11 @@ class BinaryNode<T> {
     leftChild?.traverseInOrder(action);
     action(value);
     rightChild?.traverseInOrder(action);
+  }
+
+  void traversePostOrder(void Function(T value) action) {
+    leftChild?.traversePostOrder(action);
+    rightChild?.traversePostOrder(action);
+    action(value);
   }
 }
