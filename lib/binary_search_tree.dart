@@ -2,11 +2,11 @@ import 'binary_node.dart';
 
 void main() {
   final tree = buildExampleTree();
-  if (tree.contains(5)) {
-    print("Found 5!");
-  } else {
-    print("Couldn't find 5");
-  }
+  print('Tree before removal');
+  print(tree);
+  tree.remove(4);
+  print('Tree after removing root:');
+  print(tree);
 }
 
 BinarySearchTree<int> buildExampleTree() {
@@ -56,4 +56,34 @@ class BinarySearchTree<E extends Comparable<dynamic>> {
     }
     return false;
   }
+
+  void remove(E value) {
+    root = _remove(root, value);
+  }
+
+  BinaryNode<E>? _remove(BinaryNode<E>? node, E value) {
+    if (node == null) return null;
+    if (value == node.value) {
+      if (node.leftChild == null && node.rightChild == null) {
+        return null;
+      }
+      if (node.leftChild == null) {
+        return node.rightChild;
+      }
+      if (node.rightChild == null) {
+        return node.leftChild;
+      }
+      node.value = node.rightChild!.min.value;
+      node.rightChild = _remove(node.rightChild, node.value);
+    } else if (value.compareTo(node.value) < 0) {
+      node.leftChild = _remove(node.leftChild, value);
+    } else {
+      node.rightChild = _remove(node.rightChild, value);
+    }
+    return node;
+  }
+}
+
+extension _MinFinder<E> on BinaryNode<E> {
+  BinaryNode<E> get min => leftChild?.min ?? this;
 }
