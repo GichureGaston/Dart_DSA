@@ -43,3 +43,12 @@ AvlNode<E> leftRightRotate(Avlnode<E> node) {
   node.leftChild == leftRightRotate(node.leftChild!);
   return rightRotate(node);
 }
+
+Avlnode<E> balanced(Avlnode<E> node) {
+  switch (node.balanceFactor) {
+    case 2:
+    case -2:
+    default:
+      return node;
+  }
+}
