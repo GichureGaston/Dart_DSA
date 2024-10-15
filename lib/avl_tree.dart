@@ -64,3 +64,21 @@ Avlnode<E> balanced(Avlnode<E> node) {
       return node;
   }
 }
+
+AvlNode<E> _insertAt(AvlNode<E>? node, E value) {
+  if (node == null) {
+    return AvlNode(value);
+  }
+  if (value.compareTo(node.value) < 0) {
+    node.leftChild = _insertAt(node.leftChild, value);
+  } else {
+    node.rightChild = _insertAt(node.rightChild, value);
+  }
+  final balancedNode = balanced(node);
+  balancedNode.height = 1 +
+      math.max(
+        balancedNode.leftHeight,
+        balancedNode.rightHeight,
+      );
+  return balancedNode;
+}
