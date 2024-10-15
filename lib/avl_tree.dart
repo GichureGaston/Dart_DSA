@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 
+import 'avl_node.dart';
+
 AvlNode<E> leftRotate(AvlNode<E> node) {
   final pivot = node.rightChild!;
 
