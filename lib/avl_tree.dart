@@ -2,51 +2,43 @@ import 'dart:math' as math;
 
 import 'avl_node.dart';
 
-AvlNode<E> leftRotate(AvlNode<E> node) {
+AvlNode<E> leftRotate<E>(AvlNode<E> node) {
   final pivot = node.rightChild!;
-
   node.rightChild = pivot.leftChild;
-
   pivot.leftChild = node;
 
-  node.height = 1 +
-      math.max(
-        node.leftHeight,
-        node.rightHeight,
-      );
-  pivot.height = 1 +
-      math.max(
-        pivot.leftHeight,
-        pivot.rightHeight,
-      );
+  node.height = 1 + math.max(node.leftHeight, node.rightHeight);
+  pivot.height = 1 + math.max(pivot.leftHeight, pivot.rightHeight);
   return pivot;
 }
 
-AvlNode<E> rightRotate(AvlNode<E> node) {
+AvlNode<E> rightRotate<E>(AvlNode<E> node) {
   final pivot = node.leftChild!;
   node.leftChild = pivot.rightChild;
   pivot.rightChild = node;
-  node.height = 1 + math.max(node.leftHeight, node.RightHeight);
+
+  node.height = 1 + math.max(node.leftHeight, node.rightHeight);
+  pivot.height = 1 + math.max(pivot.leftHeight, pivot.rightHeight);
   return pivot;
 }
 
-AvlNode<E> rightLeftRotate(Avlnode<E> node) {
-  if (node.rightchild == null) {
+AvlNode<E> rightLeftRotate<E>(AvlNode<E> node) {
+  if (node.rightChild == null) {
     return node;
   }
-  node.rightChild == rightLeftRotate(node.rightChild!);
+  node.rightChild = rightRotate(node.rightChild!);
   return leftRotate(node);
 }
 
-AvlNode<E> leftRightRotate(Avlnode<E> node) {
+AvlNode<E> leftRightRotate<E>(AvlNode<E> node) {
   if (node.leftChild == null) {
     return node;
   }
-  node.leftChild == leftRightRotate(node.leftChild!);
+  node.leftChild = leftRotate(node.leftChild!);
   return rightRotate(node);
 }
 
-Avlnode<E> balanced(Avlnode<E> node) {
+AvlNode<E> balanced<E>(AvlNode<E> node) {
   switch (node.balanceFactor) {
     case 2:
       final left = node.leftChild;
@@ -67,7 +59,7 @@ Avlnode<E> balanced(Avlnode<E> node) {
   }
 }
 
-AvlNode<E> _insertAt(AvlNode<E>? node, E value) {
+AvlNode<E> _insertAt<E extends Comparable>(AvlNode<E>? node, E value) {
   if (node == null) {
     return AvlNode(value);
   }
@@ -77,10 +69,7 @@ AvlNode<E> _insertAt(AvlNode<E>? node, E value) {
     node.rightChild = _insertAt(node.rightChild, value);
   }
   final balancedNode = balanced(node);
-  balancedNode.height = 1 +
-      math.max(
-        balancedNode.leftHeight,
-        balancedNode.rightHeight,
-      );
+  balancedNode.height =
+      1 + math.max(balancedNode.leftHeight, balancedNode.rightHeight);
   return balancedNode;
 }
