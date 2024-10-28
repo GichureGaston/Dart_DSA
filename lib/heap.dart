@@ -62,6 +62,7 @@ class Heap<E extends Comparable<dynamic>> {
       parent = _parentIndex(child);
     }
   }
+// node index always treated as the parent node
 
   void _siftDown(int index) {
     var parent = index;
@@ -79,6 +80,7 @@ class Heap<E extends Comparable<dynamic>> {
     }
   }
 
+// removing element by sifting down
   E? remove() {
     if (isEmpty) return null;
 
@@ -87,6 +89,39 @@ class Heap<E extends Comparable<dynamic>> {
     final value = elements.removeLast();
     _siftDown(0);
     return value;
+  }
+// removing element at arbitrary index
+
+  E? removeAt(int index) {
+    final lastIndex = elements.length - 1;
+    if (index < 0 || index > lastIndex) {
+      return null;
+    }
+    if (index == lastIndex) {
+      return elements.removeLast();
+    }
+    _swapValues(index, lastIndex);
+    final value = elements.removeLast();
+    _siftDown(index);
+    _siftUp(index);
+    return value;
+  }
+  // searching for elemnet in a heap
+
+  int indexOf(E value, {int index = 0}) {
+    if (index >= elements.length) {
+      return -1;
+    }
+    if (_firstHasHigherPriority(value, elements[index])) {
+      return -1;
+    }
+    if (value == elements[index]) {
+      return index;
+    }
+    final left = indexOf(value, index: _leftChildIndex(index));
+    if (left != -1) return left;
+
+    return indexOf(value, index: _rightChildIndex(index));
   }
 
   @override
