@@ -1,11 +1,16 @@
-import 'binary_search_tree.dart';
+import 'heap.dart';
 
 void main() {
-  final tree = BinarySearchTree<int>();
-  var i;
-  for (var i = 0; i < 15; i++) {
-    tree.insert(i);
-  }
-
-  print(tree);
+  final heap = Heap<int>();
+  heap.insert(11);
+  heap.insert(8);
+  heap.insert(5);
+  heap.insert(4);
+  heap.insert(6);
+  heap.insert(2);
+  heap.insert(1);
+  heap.insert(3);
+  final root = heap.remove();
+  print(root);
+  print(heap);
 }
