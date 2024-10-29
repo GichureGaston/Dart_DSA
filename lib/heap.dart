@@ -3,7 +3,9 @@ enum Priority { max, min }
 class Heap<E extends Comparable<dynamic>> {
   Heap({List<E>? elements, this.priority = Priority.max}) {
     this.elements = (elements == null) ? [] : elements;
+    _buildHeap();
   }
+
   late final List<E> elements;
   final Priority priority;
   bool get isEmpty => elements.isEmpty;
@@ -38,6 +40,15 @@ class Heap<E extends Comparable<dynamic>> {
     final valueB = elements[indexB];
     final isFirst = _firstHasHigherPriority(valueA, valueB);
     return (isFirst) ? indexA : indexB;
+  }
+
+  //accepting a list in the constructor
+  void _buildHeap() {
+    if (isEmpty) return;
+    final start = elements.length ~/ 2 - 1;
+    for (var i = start; i >= 0; i--) {
+      _siftDown(i);
+    }
   }
 
   // swapping values
@@ -106,7 +117,7 @@ class Heap<E extends Comparable<dynamic>> {
     _siftUp(index);
     return value;
   }
-  // searching for elemnet in a heap
+  // searching for element in a heap
 
   int indexOf(E value, {int index = 0}) {
     if (index >= elements.length) {

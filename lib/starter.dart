@@ -1,13 +1,11 @@
 import 'heap.dart';
 
 void main() {
-  final heap = Heap<int>();
-  heap.insert(10);
-  heap.insert(7);
-  heap.insert(2);
-  heap.insert(5);
-  heap.insert(1);
-  final index = heap.indexOf(1);
+  //The constructor creates a max-heap from the elements of the list. Then the while
+  // loop repeatedly removes the largest element until none are left.
+  var heap = Heap(elements: [1, 13, 3, 4, 1, 6, 8, 7]);
   print(heap);
-  print(index);
+  while (!heap.isEmpty) {
+    print(heap.remove());
+  }
 }
