@@ -91,6 +91,12 @@ class Heap<E extends Comparable<dynamic>> {
     }
   }
 
+  // combines two heaps
+  void merge(List<E> list) {
+    elements.addAll(list);
+    _buildHeap();
+  }
+
 // removing element by sifting down
   E? remove() {
     if (isEmpty) return null;
